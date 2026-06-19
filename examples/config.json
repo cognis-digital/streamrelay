@@ -1,0 +1,25 @@
+{
+  "name": "studio-multicast",
+  "input": {
+    "url": "rtmp://localhost:1935/live/studio",
+    "live": true
+  },
+  "outputs": [
+    {
+      "name": "twitch",
+      "url": "rtmp://live.twitch.tv/app/REPLACE_WITH_KEY"
+    },
+    {
+      "name": "youtube",
+      "url": "rtmp://a.rtmp.youtube.com/live2/REPLACE_WITH_KEY"
+    },
+    {
+      "name": "archive-720p",
+      "url": "srt://archive.internal:9000",
+      "videoCodec": "libx264",
+      "videoBitrateKbps": 2500,
+      "audioCodec": "aac",
+      "audioBitrateKbps": 128
+    }
+  ]
+}
