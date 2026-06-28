@@ -12,6 +12,33 @@ every part of it is testable without `ffmpeg`, a network, or live processes.
 - **License:** COCL 1.0
 - **Runtime deps:** none (Node standard library only)
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+**Sample result format** _(illustrative values — run on your own data for real findings):_
+
+```
+{
+  "streams": [
+    {
+      "id": "1234567890",
+      "name": "Stream A",
+      "status": "active",
+      "created_at": "2022-01-01T12:00:00Z"
+    },
+    {
+      "id": "2345678901",
+      "name": "Stream B",
+      "status": "paused",
+      "created_at": "2022-02-15T14:30:00Z"
+    }
+  ]
+}
+```
+
+<!-- cognis:example:end -->
+
 ## Why
 
 Restreaming to multiple destinations is just `ffmpeg` plumbing, but the plumbing
