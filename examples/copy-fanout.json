@@ -1,0 +1,20 @@
+{
+  "name": "copy-fanout",
+  "input": {
+    "url": "rtmp://localhost:1935/live/studio",
+    "kind": "rtmp",
+    "live": true
+  },
+  "outputs": [
+    {
+      "name": "twitch",
+      "url": "rtmp://live.twitch.tv/app/REPLACE_WITH_KEY",
+      "reconnect": { "enabled": true, "streamed": true, "delayMaxSec": 10 }
+    },
+    {
+      "name": "youtube",
+      "url": "rtmp://a.rtmp.youtube.com/live2/REPLACE_WITH_KEY",
+      "reconnect": { "enabled": true, "streamed": true, "delayMaxSec": 10 }
+    }
+  ]
+}

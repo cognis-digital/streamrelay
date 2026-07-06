@@ -10,15 +10,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 20
+
+      - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+
       - name: Install dependencies
         run: npm install
+
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Build
         run: npm run build
+
       - name: Test
         run: npm test
-      - name: Validate example config (CI gate)
-        run: node dist/cli.js validate examples/config.json
+
+      - name: Validate every example config (CI gate)
+        run: |
+          for cfg in examples/*.json; do
+            echo "validating $cfg"
+            node dist/cli.js validate "$cfg"
+          done
+
+      - name: Demo smoke (ffmpeg-optional)
+        run: sh demos/run_all.sh

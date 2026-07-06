@@ -1,0 +1,19 @@
+{
+  "name": "srt-contribution",
+  "input": {
+    "url": "srt://ingest.internal:9000",
+    "kind": "srt",
+    "live": true
+  },
+  "outputs": [
+    {
+      "name": "distribution",
+      "url": "srt://distribution.internal:9001",
+      "reconnect": { "enabled": true, "delayMaxSec": 15 }
+    },
+    {
+      "name": "rtmp-mirror",
+      "url": "rtmp://cdn.example.com/live/REPLACE_WITH_KEY"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cognis.digital/schemas/streamrelay.schema.json",
+  "title": "streamrelay relay config",
+  "description": "A relay: one input source fanned out to one or more outputs.",
+  "type": "object",
+  "required": ["name", "input", "outputs"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]+$",
+      "description": "Relay name (letters, digits, dot, dash, underscore)."
+    },
+    "ffmpegPath": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Path to the ffmpeg binary. Defaults to \"ffmpeg\"."
+    },
+    "logLevel": {
+      "type": "string",
+      "minLength": 1,
+      "description": "ffmpeg -loglevel value. Defaults to \"warning\"."
+    },
+    "input": {
+      "type": "object",
+      "required": ["url"],
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "description": "rtmp(s)://, srt://, udp://, http(s)://, a file path, or \"-\" (stdin). Ignored for kind=testsrc."
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["rtmp", "srt", "file", "udp", "http", "testsrc", "stdin"],
+          "description": "Explicit input kind. Inferred from url when omitted."
+        },
+        "live": {
+          "type": "boolean",
+          "description": "Live ingest: low-latency flags for network, -re for files."
+        },
+        "lavfi": {
+          "type": "string",
+          "minLength": 1,
+          "description": "For kind=testsrc: a lavfi source spec, e.g. testsrc=size=1280x720:rate=30."
+        }
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/output" }
+    }
+  },
+  "definitions": {
+    "output": {
+      "type": "object",
+      "required": ["name", "url"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]+$",
+          "description": "Unique output name within the config."
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "description": "rtmp(s)://, srt:// URL, or a file path for hls/file kinds."
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["rtmp", "srt", "hls", "file"],
+          "description": "Explicit transport kind. Inferred from url/extension when omitted."
+        },
+        "videoCodec": { "type": "string", "minLength": 1, "description": "e.g. libx264, copy. Default copy." },
+        "videoBitrateKbps": { "type": "integer", "minimum": 1, "description": "Only applied when videoCodec != copy." },
+        "resolution": { "type": "string", "pattern": "^[1-9][0-9]{1,4}x[1-9][0-9]{1,4}$", "description": "WxH, transcode only." },
+        "framerate": { "type": "integer", "minimum": 1, "description": "fps, transcode only." },
+        "preset": { "type": "string", "minLength": 1, "description": "x264/x265 preset, transcode only." },
+        "gop": { "type": "integer", "minimum": 1, "description": "Keyframe interval in frames, transcode only." },
+        "audioCodec": { "type": "string", "minLength": 1, "description": "e.g. aac, copy. Default copy." },
+        "audioBitrateKbps": { "type": "integer", "minimum": 1, "description": "Only applied when audioCodec != copy." },
+        "format": { "type": "string", "minLength": 1, "description": "Container/muxer. Defaults per kind (flv/mpegts/hls/mp4)." },
+        "hlsSegmentSec": { "type": "integer", "minimum": 1, "description": "HLS -hls_time. Default 4." },
+        "hlsListSize": { "type": "integer", "minimum": 1, "description": "HLS -hls_list_size. Default 6." },
+        "reconnect": {
+          "type": "object",
+          "required": ["enabled"],
+          "additionalProperties": false,
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "streamed": { "type": "boolean" },
+            "delayMaxSec": { "type": "integer", "minimum": 1 }
+          },
+          "description": "Reconnect/backoff for network outputs (ignored for hls/file)."
+        }
+      }
+    }
+  }
+}

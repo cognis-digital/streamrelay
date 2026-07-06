@@ -1,0 +1,34 @@
+{
+  "name": "transcode-ladder",
+  "input": {
+    "url": "rtmp://localhost:1935/live/studio",
+    "kind": "rtmp",
+    "live": true
+  },
+  "outputs": [
+    {
+      "name": "twitch-1080p",
+      "url": "rtmp://live.twitch.tv/app/REPLACE_WITH_KEY",
+      "videoCodec": "libx264",
+      "videoBitrateKbps": 6000,
+      "resolution": "1920x1080",
+      "framerate": 30,
+      "preset": "veryfast",
+      "gop": 60,
+      "audioCodec": "aac",
+      "audioBitrateKbps": 160
+    },
+    {
+      "name": "youtube-720p",
+      "url": "rtmp://a.rtmp.youtube.com/live2/REPLACE_WITH_KEY",
+      "videoCodec": "libx264",
+      "videoBitrateKbps": 2500,
+      "resolution": "1280x720",
+      "framerate": 30,
+      "preset": "veryfast",
+      "gop": 60,
+      "audioCodec": "aac",
+      "audioBitrateKbps": 128
+    }
+  ]
+}
