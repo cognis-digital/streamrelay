@@ -1,0 +1,23 @@
+{
+  "name": "testsrc-hls",
+  "input": {
+    "url": "-",
+    "kind": "testsrc",
+    "lavfi": "testsrc=size=1280x720:rate=30"
+  },
+  "outputs": [
+    {
+      "name": "local-hls",
+      "url": "./out/stream.m3u8",
+      "kind": "hls",
+      "videoCodec": "libx264",
+      "videoBitrateKbps": 2500,
+      "preset": "veryfast",
+      "gop": 60,
+      "audioCodec": "aac",
+      "audioBitrateKbps": 128,
+      "hlsSegmentSec": 4,
+      "hlsListSize": 6
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "@cognis-digital/streamrelay",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Self-hosted livestream relay control plane: validate relay configs, generate ffmpeg commands, and manage relay sessions.",
   "type": "module",
   "bin": {
@@ -9,15 +9,32 @@
   "files": [
     "dist/src",
     "dist/cli.js",
-    "README.md"
+    "examples",
+    "docs",
+    "README.md",
+    "LICENSE",
+    "DISCLAIMER.md"
+  ],
+  "keywords": [
+    "ffmpeg",
+    "rtmp",
+    "srt",
+    "hls",
+    "livestream",
+    "restream",
+    "relay",
+    "control-plane",
+    "cli"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
     "test": "node --test \"dist/test/**/*.test.js\"",
+    "demo": "sh demos/run_all.sh",
     "prepublishOnly": "npm run build"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "author": "Cognis Digital",
   "license": "SEE LICENSE IN README (COCL 1.0)",
